@@ -1,13 +1,10 @@
 from random import randint
+import time
 
 def seznam(n: int, m: int) -> list:
     x=[]
-    def vyplnit(t:list):
-        for i in range(n):
-            t.append(randint(1,m))
-        if len(t) != n:vyplnit(t)
-        else:return t
-    x=vyplnit(x)
+    for i in range(n):
+        x.append(randint(1,m))
     return x
 
 def vycisti(l:list) -> list:
@@ -17,11 +14,12 @@ def vycisti(l:list) -> list:
             x.append(i)
     return x
 
-h = seznam(5000, 1000)
+start_time = time.time()
 
+h = seznam(10000, 10000)
+
+print("--- %s seconds ---" % (time.time() - start_time))
 print(h)
-print('\n')
-print(len(h))
 print('\n')
 
 k = vycisti(h)

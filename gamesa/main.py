@@ -1,6 +1,6 @@
 #do 29.12.2022 - 2,5h ztraceno
 #28.12.2022 - 1h session
-#29.12.2022 - 4h session (zatím)
+#29.12.2022 - 7,75h session 
 
 from assets import *
 from commands import commands, odcesti, typeOut, randomQuote, arguments, cmdOutput

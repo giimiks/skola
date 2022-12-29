@@ -20,24 +20,29 @@ class assets:
       }
       items = {
             "Nedopalek": {
-                  "desc": "Nedopalek od cigarety.",
+                  "desc": "Nedopalek od cigarety. Ještě se bude dát šluknout.",
                   "use": {"Zapalovač"},
-                  "effect": "Smrad"
+                  "effect": "Smrad z rukou a úst"
+            },
+            "Zapalovač": {
+                  "desc": "Plynový zapalovač.",
+                  "use": {"Nedopalek", "Cigareta", "Joint"}
             }
       }
-      obstacles = {"Hladové dítě": {
-            "desc": "Na tvé cestě Raisovkou se nachází dítě, je hladové, hyperaktivní a nesleze ti z těla. Musíš nějak zakročit.",
-            "killableBy": {"Klacek"},
-            "unlock": {
-                  "where":{"Karla Čapka", "Texas", "Horňák"},
-                  "items": {"Amfetaminy na ADHD"}
-                  },
-            "afterKill": "Hodils dítěti klacek a dítě se po něm rozeběhlo jako šalený pes. Něco mu vypadlo z kapsy. Nyní můžeš opustit Raisovku. "
-
-      }}
+      obstacles = {
+            "Hladové dítě": {
+                  "desc": "Na tvé cestě Raisovkou se nachází dítě, je hladové, hyperaktivní a nesleze ti z těla. Musíš nějak zakročit.",
+                  "killableBy": {"Klacek"},
+                  "unlock": {
+                        "where":{"Karla Čapka", "Texas", "Horňák"},
+                        "items": {"Amfetaminy na ADHD"}
+                        },
+                  "afterKill": "Hodils dítěti klacek a dítě se po něm rozeběhlo jako šalený pes. Něco mu vypadlo z kapsy. Nyní můžeš opustit Raisovku. "
+            }
+      }
       inventory = {"Igelitka", "Telefon"}
       money = 100
       quotes = ("Co dál?", "Kam se vydáš?", "Další krok?", "Co hodláš dál dělat?", "Jak budeš pokračovat?", "Jak budeš postupovat?", "Co se bude dít dál?", "Co dál uděláš?")
-      effects = {}
+      effects = set()
 
 

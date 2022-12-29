@@ -10,13 +10,12 @@ cmdOutput = tuple[posType, assets]
 def typeOut(text: str, ): #speed: int
       i = 0
       x = str('')
+      speed = 0.02 - (len(text) / 10000)
       for char in text:
-        x+=char
-        i+=1
-        sleep(0.02)
-        print(char, end='', flush=True)
-        if i % 96 == 0 and char == ' ':
-            print('\n')
+            x+=char
+            i+=1
+            sleep(speed)
+            print(char, end='', flush=True)
       return ''
 
 def randomQuote(text: tuple[str]) -> str:
@@ -24,7 +23,6 @@ def randomQuote(text: tuple[str]) -> str:
 
 def jdi(args: arguments, pos: posType, state: assets) -> cmdOutput:
     args = ' '.join(args)
-    print(args)
     if args in pos.get('where'):
       typeOut(state.map.get(args).get("desc"))
       return (state.map.get(args), state)
@@ -33,8 +31,8 @@ def jdi(args: arguments, pos: posType, state: assets) -> cmdOutput:
       return (pos, state)
 
 def checkExistence(args: str, checkAgainst: set[str]) -> bool:
-      #Zatím neimplementováno - bude kontrolovat zkratky v příkazech
-      return False
+      return 0
+      
 
 def seber(args: arguments, pos: posType, state: assets) -> cmdOutput:
       args = ' '.join(args)
@@ -61,19 +59,39 @@ def kam(args: arguments, pos: posType, state: assets) -> cmdOutput:
       return (pos, state)
             
 def zkoumej(args: arguments, pos: posType, state: assets) -> cmdOutput:
-      if isinstance(args, str):
-            print(pos)
-            for item in pos.get("zkoumej"):
-                  pos.get("items").add(item)
-            pos.get("zkoumej").clear()
-            print(pos)
-            typeOut(f"Nachází se zde:\n\n > {', '.join(pos.get('items'))}")
+      if len(args) == 0:
+            if len(pos.get("zkoumej")) != 0:
+                  for item in pos.get("zkoumej"):
+                        pos.get("items").add(item)
+                  pos.get("zkoumej").clear()
+                  typeOut(f"Nachází se zde:\n\n > {', '.join(pos.get('items'))}")
+            else: typeOut("Nenachází se zde žádné předměty.")
+            if len(pos.get("obstacles")) != 0:
+                  typeOut(f"V cestě dál ti zde brání:\n\n {', '.join(pos.get('obstacles'))}")
+      else:
+            if(args[0] in state.inventory):
+                  typeOut(state.items.get(args[0]).get("desc"))
+            elif(args[0] in state.obstacles):
+                  typeOut(state.obstacles.get(args[0]).get("desc"))
+            else: typeOut(f"Nelze zkoumat {args[0]}")         
       return (pos, state)
 
 def inventory(args: arguments, pos: posType, state: assets) -> cmdOutput:
       typeOut(f"V inventáři máš: \n\n > {', '.join(state.inventory)}") if len(state.inventory) != 0 else typeOut("Nemáš nic ve svém inventáři.")
       return (pos, state)
 
+def pouzij(args: arguments, pos: posType, state: assets) -> cmdOutput:
+      args = ' '.join(args)
+      if args in state.inventory:
+            return
+      else: 
+            query: dict[str, list] = {"firstItem": [], "secondItem": []}
+            order: str = "firstItem"
+            for word in args:
+                  if word != 'na':
+                        query.get(order).append(word)
+                  else: order = "secondItem"
+            
 commands: dict[str, dict[str, FunctionType | str]] = {
       "jdi": {
             "callback": jdi,

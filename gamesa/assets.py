@@ -3,15 +3,15 @@ class assets:
             "Karla Čapka": {
                   "name": "Karla Čapka",
                   "desc": "Ááá, ulice Karla Čapka... Nejpodivuhodnější nátury z celého Habartova se v místních bytech scházejí k různým a jistě legálním aktivitám.",
-                  "items": {"Kamínek"},
+                  "items": set(),
                   "zkoumej":  {"Nedopalek", "Zapalovač"},
                   "where": {"Raisovka", "Skatepark", "Texas"},
-                  "obstacles": {}
+                  "obstacles": set()
                   },
             "Raisovka": {
                   "name": "Raisovka",
                   "desc": "Raisova ulice - protáhlá ulička s paneláčky, které mají přívětivě barevnou fasádu. Škoda, že stejně přívětiví nejsou místní obyvatelé...",
-                  "items": {},
+                  "items": set(),
                   "zkoumej": {"Klacek", "Květ", "Banán"},
                   "where": {"Karla Čapka"},
                   "obstacles": {"Hladové dítě"}
@@ -21,7 +21,8 @@ class assets:
       items = {
             "Nedopalek": {
                   "desc": "Nedopalek od cigarety.",
-                  "use": {"Zapalovač"}
+                  "use": {"Zapalovač"},
+                  "effect": "Smrad"
             }
       }
       obstacles = {"Hladové dítě": {
@@ -34,7 +35,9 @@ class assets:
             "afterKill": "Hodils dítěti klacek a dítě se po něm rozeběhlo jako šalený pes. Něco mu vypadlo z kapsy. Nyní můžeš opustit Raisovku. "
 
       }}
-      inventory = {"Igelitka", "Telefon", "Peníze"}
+      inventory = {"Igelitka", "Telefon"}
+      money = 100
       quotes = ("Co dál?", "Kam se vydáš?", "Další krok?", "Co hodláš dál dělat?", "Jak budeš pokračovat?", "Jak budeš postupovat?", "Co se bude dít dál?", "Co dál uděláš?")
+      effects = {}
 
 

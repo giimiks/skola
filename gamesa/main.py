@@ -1,5 +1,5 @@
 #do 29.12.2022 - 2,5h ztraceno
-#29.12.2022 - 1h session
+#28.12.2022 - 1h session
 
 import assets as currentState
 from random import randint

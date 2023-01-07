@@ -3,46 +3,52 @@ class assets:
             "Karla Čapka": {
                   "name": "Karla Čapka",
                   "desc": "Ááá, ulice Karla Čapka... Nejpodivuhodnější nátury z celého Habartova se v místních bytech scházejí k různým a jistě legálním aktivitám.",
-                  "items": set(),
-                  "zkoumej":  {"Nedopalek", "Zapalovač"},
-                  "where": {"Raisovka", "Skatepark", "Texas"},
-                  "obstacles": set()
+                  "items": list(),
+                  "zkoumej":  ["Nedopalek", "Zapalovač", "Test"],
+                  "where": ["Raisovka", "Skatepark", "Texas"],
+                  "obstacles": list()
                   },
             "Raisovka": {
                   "name": "Raisovka",
                   "desc": "Raisova ulice - protáhlá ulička s paneláčky, které mají přívětivě barevnou fasádu. Škoda, že stejně přívětiví nejsou místní obyvatelé...",
-                  "items": set(),
-                  "zkoumej": {"Klacek", "Květ", "Banán"},
-                  "where": {"Karla Čapka"},
-                  "obstacles": {"Hladové dítě"}
+                  "items": list(),
+                  "zkoumej": ["Klacek", "Květ", "Banán"],
+                  "where": ["Karla Čapka"],
+                  "obstacles": ["Hladové dítě"]
             },
 
       }
-      items = {
+      _items = {
             "Nedopalek": {
                   "desc": "Nedopalek od cigarety. Ještě se bude dát šluknout.",
-                  "use": {"Zapalovač"},
+                  "use": ["Zapalovač"],
                   "effect": "Smrad z rukou a úst"
             },
             "Zapalovač": {
                   "desc": "Plynový zapalovač.",
-                  "use": {"Nedopalek", "Cigareta", "Joint"}
+                  "use": ["Cigareta", "Joint"]
+            },
+            "Test": {
+                  "desc": "Testovací předmět",
+                  "use": ["self"],
+                  "effect": "Testovací efekt."
+
             }
       }
-      obstacles = {
+      _obstacles = {
             "Hladové dítě": {
                   "desc": "Na tvé cestě Raisovkou se nachází dítě, je hladové, hyperaktivní a nesleze ti z těla. Musíš nějak zakročit.",
-                  "killableBy": {"Klacek"},
+                  "killableBy": ["Klacek"],
                   "unlock": {
-                        "where":{"Karla Čapka", "Texas", "Horňák"},
-                        "items": {"Amfetaminy na ADHD"}
+                        "where":["Karla Čapka", "Texas", "Horňák"],
+                        "items": ["Amfetaminy na ADHD"]
                         },
                   "afterKill": "Hodils dítěti klacek a dítě se po něm rozeběhlo jako šalený pes. Něco mu vypadlo z kapsy. Nyní můžeš opustit Raisovku. "
             }
       }
-      inventory = {"Igelitka", "Telefon"}
+      inventory = ["Igelitka", "Telefon"]
       money = 100
-      quotes = ("Co dál?", "Kam se vydáš?", "Další krok?", "Co hodláš dál dělat?", "Jak budeš pokračovat?", "Jak budeš postupovat?", "Co se bude dít dál?", "Co dál uděláš?")
-      effects = set()
+      _quotes = ("Co dál?", "Kam se vydáš?", "Další krok?", "Co hodláš dál dělat?", "Jak budeš pokračovat?", "Jak budeš postupovat?", "Co se bude dít dál?", "Co dál uděláš?")
+      effects = list()
 
 

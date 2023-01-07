@@ -1,17 +1,20 @@
 #do 29.12.2022 - 2,5h ztraceno
 #28.12.2022 - 1h session
 #29.12.2022 - 7,75h session 
+#30.12.2022 - 30min
+#04.01.2023 - 15min
+#07.01.2023 - 
 
 from assets import *
 from commands import commands, odcesti, typeOut, randomQuote, arguments, cmdOutput
 
 currentState = assets()
-position: dict[str, str | set[str]] = currentState.map.get("Karla Čapka")
+position: dict[str, str | list[str]] = currentState.map.get("Karla Čapka")
 
 while True:
     executed = False
     print('\n')
-    prompt: str | arguments = input(f"{typeOut(randomQuote(currentState.quotes))} > ")
+    prompt: str | arguments = input(f"{typeOut(randomQuote(currentState._quotes))} > ")
     if prompt != '':
         prompt = prompt.split(' ') if len(prompt.split(' ')) > 1 else prompt
 

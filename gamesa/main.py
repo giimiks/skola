@@ -4,12 +4,22 @@
 #30.12.2022 - 30min
 #04.01.2023 - 15min
 #07.01.2023 - 6,25h
+#10.01.2023 - 
 
 from assets import *
 from commands import commands, odcesti, typeOut, randomQuote
 
 currentState = assets()
 position: dict[str, str | list[str]] = currentState.map.get("Karla Čapka")
+
+typeOut("  _    _       _                _                           _                 _                       \n | |  | |     | |              | |                 /\      | |               | |                      \n | |__| | __ _| |__   __ _ _ __| |_ _____   __    /  \   __| |_   _____ _ __ | |_ _   _ _ __ ___  ___ \n |  __  |/ _` | '_ \ / _` | '__| __/ _ \ \ / /   / /\ \ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \/ __|\n | |  | | (_| | |_) | (_| | |  | || (_) \ V /   / ____ \ (_| |\ V /  __/ | | | |_| |_| | | |  __/\__ \n |_|  |_|\__,_|_.__/ \__,_|_|   \__\___/ \_/   /_/    \_\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___||___/", 0.002)
+print("\n")
+typeOut("   ___        _                            _    _ _ _        \n  / __|___ __| |_ __ _   _____ _   _ _ ___| |_ | (_) |___  _ \n | (__/ -_|_-<  _/ _` | |_ / _` | | '_/ _ \ ' \| | | / / || |\n  \___\___/__/\__\__,_| /__\__,_| |_| \___/_||_|_|_|_\_\\_, |\n                                                        |__/ ", 0.005)                                                                                                      
+print("\n\n\n")
+typeOut("Tvé jméno, věk ani jiné atributy nejsou důležité. Máš jen jediný a to zcela jasný úkol - dostat se přes nástrahy a překážky Habartova do Tesca a koupit rohlíky.")
+print("\n")
+typeOut("Zdali toho dosáhneš, je už jen na tobě. Na nic nečekej a jdi. Při nejhorším máš k dispozici 'návod'")
+print("\n\n")
 
 while True:
     executed = False

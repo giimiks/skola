@@ -5,10 +5,9 @@ from typing import Any
 from assets import assets
 import json
 
-def typeOut(text: str, ): #speed: int
+def typeOut(text: str, speed = 0.02): #speed: int
       i = 0
       x = str('')
-      speed = 0.02 - (len(text) / 10000)
       for char in text:
             x+=char
             i+=1
@@ -48,7 +47,7 @@ def jdi(args: list[str] | str, pos: dict[str, str | list[str]], state: assets) -
                   return (state.map.get(matches[0]), state)
       elif len(matches) > 1:
             typeOut(f"Nejednoznačný vstup příkazu. ")
-            selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matches)} "))
+            selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matches)} "+ "\n"))
             if selection in matches:
                   typeOut(state.map.get(selection).get("desc"))
                   return (state.map.get(selection), state)
@@ -67,8 +66,13 @@ def seber(args: list[str] | str, pos: dict[str, str | list[str]], state: assets)
             typeOut((f"Sebral jsi {matchesInventory[0]}"))
       elif len(matchesInventory) > 1:
             typeOut(f"Nejednoznačný vstup příkazu. ")
-            selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesInventory)} "))
-            pos.get("items").remove(selection);state.inventory.append(selection);state.map.get(pos.get("name")).update(pos);typeOut((f"Sebral jsi {matchesInventory[0]}")) if selection in matchesInventory else typeOut("Nezadal jsi správné slovo ze seznamu.")
+            selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesInventory)} "+ "\n"))
+            if selection in matchesInventory:
+                  pos.get("items").remove(selection)
+                  state.inventory.append(selection)
+                  state.map.get(pos.get("name")).update(pos)
+                  typeOut((f"Sebral jsi {selection}")) 
+            else: typeOut("Nezadal jsi správné slovo ze seznamu.")
       else: print(f"Nevidím v okolí {args}")
       return (pos, state)
 
@@ -82,8 +86,13 @@ def poloz(args: list[str] | str, pos: dict[str, str | list[str]], state: assets)
             typeOut((f"Položil jsi {matchesInventory[0]}"))
       elif len(matchesInventory) > 1:
             typeOut(f"Nejednoznačný vstup příkazu. ")
-            selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesInventory)} "))
-            pos.get("items").append(matchesInventory[0]);state.inventory.remove(selection);state.map.get(pos.get("name")).update(pos);typeOut((f"Položil jsi {matchesInventory[0]}")) if selection in matchesInventory else typeOut("Nezadal jsi správné slovo ze seznamu.")
+            selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesInventory)} "+ "\n"))
+            if selection in matchesInventory:
+                  pos.get("items").append(matchesInventory[0])
+                  state.inventory.remove(selection)
+                  state.map.get(pos.get("name")).update(pos)
+                  typeOut((f"Položil jsi {matchesInventory[0]}"))
+            else: typeOut("Nezadal jsi správné slovo ze seznamu.")
       else: print(f"Nevidím v okolí {args}")
       return (pos, state)
 
@@ -101,7 +110,7 @@ def zkoumej(args: list[str] | str, pos: dict[str, str | list[str]], state: asset
                   typeOut(f"Nachází se zde:\n\n > {', '.join(pos.get('items'))}")
             else: typeOut("Nenachází se zde žádné předměty.")
             if len(pos.get("obstacles")) != 0:
-                  typeOut(f"V cestě dál ti zde brání:\n\n {', '.join(pos.get('obstacles'))}")
+                  typeOut(f"\n\nV cestě dál ti zde brání:\n\n > {', '.join(pos.get('obstacles'))}")
       else:
             matchesInventory = checkExistence(args[0], state.inventory)
             matchesObstacles = checkExistence(args[0], state._obstacles)
@@ -109,14 +118,19 @@ def zkoumej(args: list[str] | str, pos: dict[str, str | list[str]], state: asset
                   typeOut(state._items.get(matchesInventory[0]).get("desc"))
             elif len(matchesInventory) > 1:
                   typeOut(f"Nejednoznačný vstup příkazu. ")
-                  selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesInventory)} "))
-                  typeOut(state._items.get(selection).get("desc")) if selection in matchesInventory else typeOut("Nezadal jsi správné slovo ze seznamu.")
+                  selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesInventory)} "+ "\n"))
+                 
+                  if selection in matchesInventory:
+                        typeOut(state._items.get(selection).get("desc"))
+                  else: typeOut("Nezadal jsi správné slovo ze seznamu.")
             elif len(matchesObstacles) == 1:
                   typeOut(state._obstacles.get(matchesObstacles[0]).get("desc"))
             elif len(matchesObstacles) > 1:
                   typeOut(f"Nejednoznačný vstup příkazu. ")
-                  selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesObstacles)} "))
-                  typeOut(state._obstacles.get(selection).get("desc")) if selection in matchesObstacles else typeOut("Nezadal jsi správné slovo ze seznamu.")  
+                  selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesObstacles)} "+ "\n"))
+                  if selection in matchesObstacles:
+                        typeOut(state._obstacles.get(selection).get("desc"))
+                  else: typeOut("Nezadal jsi správné slovo ze seznamu.")  
             else: typeOut("Toto nelze zkoumat. Buď je to předmět a nemáš ho v inventáři nebo je to objekt, který se v aktuální lokaci nenachází.")      
       return (pos, state)
 
@@ -186,7 +200,7 @@ def pouzij(args: list[str] | str, pos: dict[str, str | list[str]], state: assets
                               typeOut('Tento předmět nelze použít na sebe.')
                   elif len(matchesFirst) > 1:
                         typeOut(f"Nejednoznačný vstup příkazu. ")
-                        selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesFirst)} "))
+                        selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesFirst)} ") + "\n")
                         if selection in matchesFirst:
                               if 'self' in state._items.get(selection).get("use"):
                                     state.inventory.remove(selection)
@@ -197,11 +211,21 @@ def pouzij(args: list[str] | str, pos: dict[str, str | list[str]], state: assets
                         else:
                               typeOut("Nesprávně zadaný výraz.")
             else:
+                 
+
                   if args[len(checkLengthAgainst)] != 'na':
                         typeOut('Mezi argumenty tohoto příkazu je očekáván výraz "na".')
                         return (pos, state)
                   else:
                         args.pop(len(checkLengthAgainst))
+                  if len(matchesFirst) > 1:
+                        typeOut(f"Nejednoznačný vstup prvního argumentu. ")
+                        selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesFirst)} "+ "\n"))
+                        if selection in matchesFirst:
+                              matchesFirst[0] == selection
+                        else:
+                              typeOut("Zadané slovo není na seznamu.")
+                              return (pos, state)
                   isSecondArgQuoted = False
                   secondArgument = ''
                   if args[len(checkLengthAgainst)][0] == '"':
@@ -211,39 +235,55 @@ def pouzij(args: list[str] | str, pos: dict[str, str | list[str]], state: assets
                         if args[1] != args[len(args)-1]:
                               typeOut("Argumenty složené z více slov musí být v uvozovkách")
                               return (pos, state)
-                        secondArgument += args[1:]  
+                        secondArgument += args[1]  
                   if isSecondArgQuoted == True:  
                         for i in range(len(args)):
                               secondArgument += args[i]  + ' '
                   
-                  if isSecondArgQuoted == True and secondArgument[-1] != '"':
+                  if isSecondArgQuoted == True and secondArgument[len(secondArgument)-2] != '"':
                         typeOut('Argument nebyl ukončen uvozovkou.')
+                        print(secondArgument[len(secondArgument)])
+                        return (pos, state)
                   matchesSecondItems = checkExistence(secondArgument, state._items)
                   matchesSecondObstacles = checkExistence(secondArgument, state._obstacles)
-                  if len(matchesFirst) == 1:
-                        if len(matchesSecondItems) == 1 and len(matchesSecondObstacles) == 0:
-                              if not matchesFirst[0] in state._items.get(matchesSecondItems[0]).get("use"):
-                                    typeOut(f"Nelze použít {matchesFirst[0]} na {matchesSecondItems[0]}.")
+                  print(matchesSecondItems)
+                  if len(matchesSecondItems) == 1 and len(matchesSecondObstacles) == 0:
+                        print(matchesSecondItems)
+                        if not matchesFirst[0] in state._items.get(matchesSecondItems[0]).get("use"):
+                              typeOut(f"Nelze použít {matchesFirst[0]} na {matchesSecondItems[0]}.")
+                        else:
+                              typeOut(f"Použil jsi {matchesFirst[0]} na {matchesSecondItems[0]} a byl ti přidělen efekt: {state._items.get(matchesFirst[0]).get('effect').get(matchesSecondItems[0])}")
+                              state.effects.append(state._items.get(matchesFirst[0]).get("effect").get(matchesSecondItems[0]))
+                              state.inventory.remove(matchesFirst[0])
+                              state.inventory.remove(matchesSecondItems[0])
+                  elif len(matchesSecondItems) == 0 and len(matchesSecondObstacles) == 1:
+                        if not matchesFirst[0] in state._obstacles.get(matchesSecondObstacles[0]).get("killableBy"):
+                              typeOut(f"Nelze použít {matchesFirst[0]} na {matchesSecondObstacles[0]}")  
+                        else:
+                              typeOut(state._obstacles.get(matchesSecondObstacles[0]).get("afterKill"))
+                              state.inventory.remove(matchesFirst[0])
+                              pos.get("items").extend(state._obstacles.get(matchesSecondObstacles[0]).get("unlock").get("items"))
+                              pos.get("where").extend(state._obstacles.get(matchesSecondObstacles[0]).get("unlock").get("where"))
+                              pos.get("obstacles").remove(matchesSecondObstacles[0])
+                              state.map.get(pos.get("name")).update(pos)
+                  elif len(matchesSecondItems) > 1 and len(matchesSecondObstacles) == 0:
+                        typeOut(f"Nejednoznačný vstup druhého argumentu. ")
+                        selection = input(typeOut(f"Vyber jedno slovo z následujícího seznamu (celým slovem):\n\n > {', '.join(matchesSecondItems)} "+ "\n"))
+                        if selection in matchesSecondItems:
+                              if not matchesFirst[0] in state._items.get(selection).get("use"):
+                                    typeOut(f"Nelze použít {matchesFirst[0]} na {selection}.")
                               else:
-                                    state.effects.append(state._items.get(matchesFirst[0]).get("effect").get(matchesSecondItems[0]))
-                        elif len(matchesSecondItems) == 0 and len(matchesSecondObstacles) == 1:
-                              print('here')            
-
-
-                              
-                       
-                        
-
-
-            
-
-
-
-                   
+                                    typeOut(f"Použil jsi {matchesFirst[0]} na {selection} a byl ti přidělen efekt: {state._items.get(matchesFirst[0]).get('effect').get(selection)}")
+                                    state.effects.append(state._items.get(matchesFirst[0]).get("effect").get(selection))
+                                    state.inventory.remove(matchesFirst[0])
+                                    state.inventory.remove(selection)
+                        else:
+                              typeOut("Zadané slovo není na seznamu.")
+                              return (pos, state)             
       return (pos, state)
 
 def save(args: list[str] | str, pos: dict[str, str | list[str]], state: assets) -> tuple[dict[str, str | list[str]], assets]:
-      saveData = {"pos": pos, "map": state.map, "inv": state.inventory, "money": state.money, "effects": state.effects}
+      saveData = {"pos": pos, "map": state.map, "inv": state.inventory,  "effects": state.effects}
       with open(".savefile", "w", encoding='utf8') as file:
             json.dump(saveData, file, ensure_ascii=False, default=tuple)
       return (pos, state)
@@ -252,7 +292,6 @@ def load(args: list[str] | str, pos: dict[str, str | list[str]], state: assets) 
       with open(".savefile", "r", encoding='utf8') as file:
             data: dict[str, dict[str, Any]] = json.loads(file.read())
             state.map = data.get("map")
-            state.money = data.get("money")
             state.effects = data.get("effects")
             state.inventory = data.get("inv")
                   
@@ -290,8 +329,30 @@ def navod(args: list[str] | str, pos: dict[str, str | list[str]], state: assets)
       typeOut('Existují i příkazy, které fungují jak s argumenty, tak i bez jediného argumentu.\n')
       typeOut('Pro přesnější definici jakéhokoliv příkazu doporučuji použít příkaz help. (Příkaz help bez argumentů vypíše seznam všech dostupných příkazů)')
       
+      
       return(pos, state)
-                  
+
+def oslov(args: list[str] | str, pos: dict[str, str | list[str]], state: assets) -> tuple[dict[str, str | list[str]], assets]:
+      if args[:3] == "osl":
+            typeOut("Zadej název osoby pro oslovení.")
+      matches = checkExistence(' '.join(args), pos.get("obstacles"))     
+      if len(matches) == 0:
+            typeOut("Tato osoba se zde nenachází.")
+      else:
+            if(state._obstacles.get(matches[0]).get("oslov") == "none"):
+                  typeOut("Tuto osobu nelze oslovit a zbavíš se jí nějakým předmětem.")
+                  return (pos, state)  
+            if(state._obstacles.get(matches[0]).get("oslov") not in state.effects):
+                  typeOut(f"Potřebuješ získat efekt {state._obstacles.get(matches[0]).get('oslov')} k oslovení této osoby")
+                  return (pos, state)
+            else:
+                  state.effects.remove(state._obstacles.get(matches[0]).get('oslov'))
+                  pos.get("items").extend(state._obstacles.get(matches[0]).get("unlock").get("items"))
+                  pos.get("where").extend(state._obstacles.get(matches[0]).get("unlock").get("where"))
+                  pos.get("obstacles").remove(matches[0])
+                  state.map.get(pos.get("name")).update(pos)
+                  typeOut(state._obstacles.get(matches[0]).get("afterKill"))
+      return (pos, state)             
 commands: dict[str, dict[str, FunctionType | str]] = {
       "jdi": {
             "callback": jdi,
@@ -340,6 +401,10 @@ commands: dict[str, dict[str, FunctionType | str]] = {
       "návod": {
             "callback": navod,
             "desc": "Ukáže návod na ovládání hry."
+      },
+      "oslov": {
+            "callback": oslov,
+            "desc": "Osloví překážejícího občana Habartova. \n\n  Příklad: oslov Důchodce"
       }
 }
       

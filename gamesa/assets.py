@@ -4,7 +4,7 @@ class assets:
                   "name": "Karla Čapka",
                   "desc": "Ááá, ulice Karla Čapka... Nejpodivuhodnější nátury z celého Habartova se v místních bytech scházejí k různým a jistě legálním aktivitám.",
                   "items": [],
-                  "zkoumej":  ["Nedopalek", "Zapalovač", "Test", "Ryba na rybu"],
+                  "zkoumej":  ["Nedopalek", "Zapalovač"],
                   "where": ["Raisovka", "Skatepark", "Texas"],
                   "obstacles": []
                   },
@@ -13,9 +13,16 @@ class assets:
                   "desc": "Raisova ulice - protáhlá ulička s paneláčky, které mají přívětivě barevnou fasádu. Škoda, že stejně přívětiví nejsou místní obyvatelé...",
                   "items": [],
                   "zkoumej": ["Klacek", "Květ", "Banán"],
-                  "where": ["Karla Čapka"],
+                  "where": [],
                   "obstacles": ["Hladové dítě"]
-            }
+            },
+            "Skatepark":
+                  {
+                        "name": "Skatepark",
+                        "desc": "Tento skatepark již není skatepark. Rampy byly prodané a na místě se plánuje vybudování parkoviště. Jedno ovšem zůstalo - pochůzky habartovských dětí a veškerý bordel po nich.",
+                        "items": [],
+                        "zkoumej": ["Klacek", "Květ", "Banán"]
+                  }
 
       }
       _items: dict[str, dict[str, str | list[str] | dict[str, str]]] = {
@@ -43,8 +50,12 @@ class assets:
             },
             "Klacek": {
                   "desc":"Dubový klacek, nic extra.",
-                  "use": "Hladové dítě",
+                  "use": ["Hladové dítě"],
+            },
+            "Květ": {
+                  "desc": "Podezřele vypadající květ"
             }
+            
       }
       _obstacles: dict[str, dict[str, str | list[str] | dict[str, list[str]]]] = {
             "Hladové dítě": {
@@ -52,13 +63,13 @@ class assets:
                   "killableBy": ["Klacek"],
                   "unlock": {
                         "where":["Karla Čapka", "Texas", "Horňák"],
-                        "items": ["Amfetaminy na ADHD"]
+                        "items": ["Amfetaminy"]
                         },
-                  "afterKill": "Hodils dítěti klacek a dítě se po něm rozeběhlo jako šalený pes. Něco mu vypadlo z kapsy. Nyní můžeš opustit Raisovku. "
+                  "afterKill": "Hodils dítěti klacek a dítě se po něm rozeběhlo jako šalený pes. Něco mu vypadlo z kapsy. Nyní můžeš opustit Raisovku. ",
+                  "oslov": "Cigaretový smrad z pusy"
             }
       }
       inventory: list[str] = ["Igelitka", "Telefon"]
-      money: int = 100
       _quotes: set[str] = ("Co dál?", "Jaký je tvůj další krok?", "Další krok?", "Co hodláš dál dělat?", "Jak budeš pokračovat?", "Jak budeš postupovat?", "Co se bude dít dál?", "Co dál uděláš?", "A dál?", "Co se dál stane?")
       effects: list[str] = []
 

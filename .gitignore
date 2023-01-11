@@ -4,3 +4,6 @@ gamesa/__pycache__/commands.cpython-311.pyc
 
 gamesa/__pycache__/assets.cpython-39.pyc
 gamesa/__pycache__/commands.cpython-39.pyc
+gamesa/dist/
+gamesa/build/
+gamesa/hra.lnk

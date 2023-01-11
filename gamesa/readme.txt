@@ -1,0 +1,1 @@
+Pro spuštění hry doporučuji použít soubor hra, nebo ./dist/main.exe, jelikož hra nemusí s vaší verzí pythonu fungovat.
